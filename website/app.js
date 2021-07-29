@@ -64,7 +64,7 @@ const start = ()=>{
     let feelings = document.getElementById("feelings").value;
 
 
-    const url = `${base_url}&zip=${zip}&APPID=${api_key}`;
+    const url = `${base_url}&zip=${zCode}&APPID=${api_key}`;
     const data = Weather(url)
     data=>
     {
