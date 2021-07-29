@@ -24,29 +24,29 @@ app.use(express.static('website'));
 
 // Setup Server
 
-const port = 3000;
+const port = 8080;
 
-const server = app.listen(port,listening);
-function listening() {
-    // console the server
-    console.log(`Server is running on http://localhost:${port}`)
-    
-}
+const server = app.listen(port, listening);
+ function listening(){
+    // console.log(server);
+    console.log(`running on localhost: ${port}`);
+  };
+
 // Get route
-app.get('projectData', getData);
+app.get('/all', getData);
 
 function getData(req,res){
     res.send(projectData);
 }
 
 
+
 const data=[];
 // POST route
-app.post(`/projectData`,postData);
+app.post('/add',callData);
 
 
-function postData(req,res){
-    data.push(req.body);
-    
+function callData(req,res){
+    data.push(req.body);    
 }
 
