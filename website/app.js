@@ -1,7 +1,7 @@
 
 /* Global Variables */
-const api_key = "9b948de7776b6493094f6fa1a3b2a939";
-const base_url = `http://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric`;
+const api_key = "a1bc522478322c40ad104448d43305b3";
+const base_url = `https://api.openweathermap.org/data/2.5/weather`;
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -9,7 +9,7 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
 // get the data weather from the url
-const getWeather = async(url)=>{
+const weather = async(url)=>{
    const res = await fetch(url);
     try{
         const newData = res.json();
@@ -46,11 +46,11 @@ const updateUi= async(url) =>
     try
     {
         const allData = req.json();
-        document.getElementById('city').innerHTML =`City: ${allData[0].city}` ;
-        document.getElementById('date').innerHTML = `City: ${allData[0].date}`;
-        document.getElementById('temp').innerHTML = `City: ${allData[0].temp}`;
-        document.getElementById('description').innerHTML = `City: ${allData[0].description}`;
-        document.getElementById('content').innerHTML = `City: ${allData[0].content}`;
+        document.getElementById('city').innerHTML = allData[0].city;
+        document.getElementById('date').innerHTML = allData[0].date;
+        document.getElementById('temp').innerHTML = allData[0].temp;
+        document.getElementById('description').innerHTML = allData[0].description;
+        document.getElementById('content').innerHTML = allData[0].content;
         
     }
     catch(error){
@@ -60,12 +60,13 @@ const updateUi= async(url) =>
 
 // start function that generates everything
 const start = ()=>{
-    const zip = document.getElementById("zip").value;
-    const url = `${base_url}&zip=${zip}&APPID=${api_key}`;
+    const zCode = document.getElementById("zip").value;
     let feelings = document.getElementById("feelings").value;
 
 
-    getWeather(url).then((data) =>
+    const url = `${base_url}&zip=${zip}&APPID=${api_key}`;
+    const data = Weather(url)
+    data=>
     {
         postData('/projectData',
         {   
@@ -76,8 +77,8 @@ const start = ()=>{
             description:data.description
         })
 
-    })
-    .then(updateUi('/projectData'))
+    }
+    (updateUi('/all'))
 }
 
 // starting the start functino on click 
