@@ -1,7 +1,7 @@
 
 /* Global Variables */
 const api_key = "a1bc522478322c40ad104448d43305b3";
-const base_url = `https://api.openweathermap.org/data/2.5/weather`;
+const base_url = `http://api.openweathermap.org/data/2.5/forecast?`;
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -61,24 +61,30 @@ const updateUi= async(url) =>
 // start function that generates everything
 const start = ()=>{
     const zCode = document.getElementById("zip").value;
-    let feelings = document.getElementById("feelings").value;
+    let content = document.getElementById("feelings").value;
 
 
-    const url = `${base_url}&zip=${zCode}&APPID=${api_key}`;
-    const data = Weather(url)
+    const url = `${base_url}&zip=${zCode}&appid=${api_key}`;
+    const data = weather(url)
+    const c2 = kToC(data.temp)
     data=>
     {
-        postData('/projectData',
+        postData('/add',
         {   
             city:data.city,
             date:newDate,
-            temp:data.temp,
-            content:feelings,
+            temp:c2,
+            content:content,
             description:data.description
         })
 
     }
     (updateUi('/all'))
+}
+
+function kToC(n){
+    const c = n-237
+    return c
 }
 
 // starting the start functino on click 
